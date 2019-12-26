@@ -1,7 +1,7 @@
 const querystring = require('querystring');
 const aws = require('aws-sdk');
 const uuidv4 = require('uuid/v4');
-const Sudoku = require('../src/util/sudoku.class');
+const Sudoku = require('../sudoku.class');
 
 exports.handlerhandler = async (event, context) => {
   if (event.httpMethod !== "POST") {
