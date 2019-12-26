@@ -4,7 +4,7 @@ const uuidv4 = require('uuid/v4');
 const Sudoku = require('./sudoku.class');
 
 exports.handler = async (event, context) => {
-  if (event.httpMethodd !== "POST") {
+  if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
