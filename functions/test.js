@@ -1,9 +1,9 @@
-import querystring from "querystring";
-import aws from 'aws-sdk';
-import { uuidv4 } from 'uuid';
-import Sudoku from '../src/util/sudoku.class';
+const querystring = require('querystring');
+const aws = require('aws-sdk');
+const uuidv4 = require('uuid/v4');
+const Sudoku = require('../src/util/sudoku.class');
 
-const handler = async (event, context) => {
+exports.handlerhandler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
