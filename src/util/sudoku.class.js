@@ -103,7 +103,13 @@ function Sudoku() {
 	this.matrix.clear();
 
 	// stores the difficulty level of the puzzle 0 is easiest.
-	this.level = 0;
+  this.level = 0;
+
+  this.setLevel = function(level) {
+    if (!level) return;
+
+    this.level = level;
+  }
 
 	// this method initializes the sudoku puzzle beginning with a root
 	// solution and randomly shuffling rows, columns and values. the result
