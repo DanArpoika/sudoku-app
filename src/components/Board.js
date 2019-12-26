@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { position, size, rem, rgba } from 'polished';
 
 const DOWN = 40;
@@ -45,41 +45,52 @@ const Cell = styled.input`
   font-size: ${rem(30)};
   color: ${props => props.theme.white};
 
+  ${props => props.isIncorrect && css`
+    background-color: red;
+  `}
+
   &:hover {
     box-shadow: 0px 0px 10px 5px ${props => rgba(props.theme.mainAccent, .16)};
   }
 `;
 
-const generateArray = () => {
-  const rows = [];
-
-  // 00 01 02 03 04 05 06 07 08 09
-  // 10 11 12 13 14 15 16 17 18 19
-  // 20 21 22 23 24 25 26 27 28 29
-
-  for (let i = 0; i < 9; i++) {
-    rows[i] = [];
-
-    for (let j = 0; j < 9; j++) {
-      rows[i].push({
-        pos: [i, j],
-        value: '',
-        isValid: true,
-      });
-    }
-  }
-
-  return rows;
-}
-
 const Board = ({
+  isActive,
   show,
   isLoading,
+  game = {},
 }) => {
+
   const boardRef = useRef();
-  const [rows, setRows] = useState(generateArray());
+  const [rows, setRows] = useState([]);
 
   const [focused, setFocus] = useState([0, 0]);
+
+  const generateArray = (matrix) => {
+    if (!matrix || matrix.length < 1) return [];
+
+    const rows = [];
+    let count = 0;
+    // 00 01 02 03 04 05 06 07 08 09
+    // 10 11 12 13 14 15 16 17 18 19
+    // 20 21 22 23 24 25 26 27 28 29
+
+    for (let i = 0; i < 9; i++) {
+      rows[i] = [];
+
+      for (let j = 0; j < 9; j++) {
+        rows[i].push({
+          pos: [i, j],
+          value: matrix[count],
+          isValid: true,
+        });
+
+        count += 1;
+      }
+    }
+
+    setRows(rows);
+  }
 
   /**
    *
@@ -113,8 +124,6 @@ const Board = ({
       default:
     }
 
-    console.log(x, y);
-
     const index = (x) + (y * 9);
     const cellToFocus = boardRef.current.childNodes[index];
 
@@ -125,8 +134,13 @@ const Board = ({
   };
 
   useEffect (() => {
+    if (rows.length < 1) {
+      generateArray(game.matrix);
+    }
+
     window.addEventListener('keydown', handleArrows);
     return (() => {
+
       window.removeEventListener('keydown', handleArrows);
     });
   })
@@ -152,11 +166,14 @@ const Board = ({
     const copyRows = [...rows];
 
     copyRows[x][y].value = value;
+    copyRows[x][y].isIncorrect = !game.checkVal(x, y, value);
+
+    if (game.level > 0) copyRows[x][y].isIncorrect = false;
 
     setRows(copyRows);
   }
 
-  if (!show) return null;
+  if (!show || !game || game.matrix.length < 1) return null;
 
   return (
     <BoardWrap>
@@ -164,11 +181,13 @@ const Board = ({
         {rows.map((row, rowIndex) => (
           row.map((cell, cellIndex) => (
             <Cell
-              onFocus={() => { console.log(`Focused: ${rowIndex}, ${cellIndex}`); setFocus([cellIndex, rowIndex]); }}
-              onChange={(e) => { handleInput(rowIndex, cellIndex, e); }}
-              hasValue={cell.value !== ''}
-              value={cell.value}
+              onFocus={() => setFocus([cellIndex, rowIndex])}
+              onChange={(e) => handleInput(rowIndex, cellIndex, e)}
+              hasValue={cell.value !== 0}
+              value={cell.value === 0 ? '' : cell.value}
               isValid={cell.isValid}
+              disabled={isActive}
+              isIncorrect={cell.isIncorrect}
             />
           ))
         ))}

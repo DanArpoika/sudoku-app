@@ -14,21 +14,21 @@ const Wrap = styled.div`
 `;
 
 const Controls = ({
+  isActive,
   show,
   onNewGame,
   onTimeUpdate,
 }) => {
   const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
   const [isStarted, setStarted] = useState(false);
 
   const toggle = () => {
-    setIsActive(!isActive);
+    //setIsActive(!isActive);
   }
 
   const handleReset = () => {
     setSeconds(0);
-    setIsActive(false);
+    //setIsActive(false);
     setStarted(false);
   }
 

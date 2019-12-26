@@ -9,6 +9,7 @@ import Controls from './components/Controls';
 
 import GlobalStyle from './styles/global-style';
 import DifficultySelector from './components/DifficultySelector';
+import Sudoku from './util/sudoku.class';
 
 const EASY = 1;
 const MEDIUM = 2;
@@ -18,8 +19,13 @@ const App = () => {
   const [difficulty, setDifficulty] = useState(EASY);
   const [isActive, setActive] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [game, setGame] = useState({});
 
   const handleNewGame = () => {
+    const board = new Sudoku();
+    board.newGame();
+
+    setGame(board);
     setActive(true);
     setLoading(true);
   };
@@ -41,6 +47,7 @@ const App = () => {
         <Board
           show={isActive}
           loading={isLoading}
+          game={game}
         />
         <DifficultySelector
           show={!isActive}
