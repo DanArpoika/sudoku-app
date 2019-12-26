@@ -1,10 +1,10 @@
 const querystring = require('querystring');
 const aws = require('aws-sdk');
 const uuidv4 = require('uuid/v4');
-const Sudoku = require('../sudoku.class');
+const Sudoku = require('./sudoku.class');
 
 exports.handlerhandler = async (event, context) => {
-  if (event.httpMethod !== "POST") {
+  if (event.httpMethodd !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
