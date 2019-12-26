@@ -34,7 +34,7 @@ exports.handlerhandler = async (event, context) => {
   }
 
   const gameKey = uuidv4();
-  const params = {
+  const ddbParams = {
     TableName: 'sudoku-games',
     Item: {
       'game-id': gameKey,
@@ -43,7 +43,7 @@ exports.handlerhandler = async (event, context) => {
     }
   };
 
-  ddb.putItem(params, (err, data) => {
+  ddbParams.putItem(params, (err, data) => {
     let statusCode = 200;
 
     if (err) {
