@@ -57,5 +57,3 @@ exports.handlerhandler = async (event, context) => {
     };
   });
 }
-
-export default handler;
