@@ -1154,4 +1154,4 @@ function Sudoku() {
 	}
 }
 
-export default Sudoku;
+exports.Sudoku = Sudoku;
