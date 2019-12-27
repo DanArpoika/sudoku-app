@@ -1,7 +1,6 @@
 import querystring from 'querystring';
 import aws from 'aws-sdk';
 import uuidv4 from 'uuid';
-import Sudoku from './sudoku.class';
 
 export const handler = (event, context, callback) => {
   if (event.httpMethod !== "POST") {
