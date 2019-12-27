@@ -51,6 +51,7 @@ export const handler = async (event, context) => {
     let statusCode = 200;
 
     if (err) {
+      console.log(err);
       statusCode = 400;
     }
 
