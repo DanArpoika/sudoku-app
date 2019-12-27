@@ -41,7 +41,7 @@ export const handler = async (event, context) => {
     Item: {
       'game-id': { S: gameKey },
       'game-board': { S: safeMatrix },
-      'game-hints-count': { S: 0 },
+      'game-hints-count': { S: "0" },
     }
   };
 
