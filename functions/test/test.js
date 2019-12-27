@@ -22,7 +22,7 @@ export const handler = async (event, context) => {
   const params = querystring.parse(event.body);
   const difficulty = params.difficulty || 0;
 
-  const game = new Sudoku();
+  const game = Sudoku();
 
   game.setLevel(difficulty);
 

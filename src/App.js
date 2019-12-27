@@ -22,7 +22,7 @@ const App = () => {
   const [game, setGame] = useState({});
 
   const handleNewGame = () => {
-    const board = new Sudoku();
+    const board = Sudoku();
     board.newGame();
 
     setGame(board);

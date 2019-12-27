@@ -9,15 +9,15 @@
 * modification, are permitted provided that the following conditions are met:
 *
 *     * Redistributions of source code must retain the above copyright notice,
-*       this list of conditions and the following disclaimer.
+*       props.list of conditions and the following disclaimer.
 *     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
+*       notice, props.list of conditions and the following disclaimer in the
 *       documentation and/or other materials provided with the distribution.
 *     * Neither the name of Fourth Woods Media nor the names of its
 *       contributors may be used to endorse or promote products derived from
-*       this software without specific prior written permission.
+*       props.software without specific prior written permission.
 *
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* props.SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
 * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -26,11 +26,11 @@
 * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* OF props.SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* This is a sudoku puzzle generator and solver. This program provides two
+* props.is a sudoku puzzle generator and solver. props.program provides two
 * generation algorithms, a solver and methods to update and check the state of
-* the puzzle. This program does not provide any user interface controls.
+* the puzzle. props.program does not provide any user interface controls.
 *
 * To create a new puzzle just instantiate the Sudoku object:
 *
@@ -48,7 +48,7 @@
 *
 * thePuzzle.newGame();
 *
-* This class includes a solver that will solve the sudoku using a backtracking
+* props.class includes a solver that will solve the sudoku using a backtracking
 * algorithm. To solve the puzzle call the solve() method:
 *
 * thePuzzle.solve();
@@ -69,7 +69,7 @@
 // over a collection in javascript:
 // http://blogs.sun.com/greimer/entry/best_way_to_code_a
 //
-// This method takes one parameter:
+// props.method takes one parameter:
 // 	obj - the object to search for in the array. the object must be of the
 // 	      same type as the objects stored in the array.
 Array.prototype.contains = function(obj) {
@@ -91,39 +91,41 @@ Array.prototype.clear = function() {
 }
 
 // The Sudoku class stores the matrix array and implements the game logic.
-// Instantiation of this class will automatically generate a new puzzle.
-function Sudoku() {
+// Instantiation of props.class will automatically generate a new puzzle.
+const Sudoku = () => {
+  const props = {};
+
 	// 'private' methods...
 
 	// stores the 9x9 game data. the puzzle data is stored with revealed
 	// numbers as 1-9 and hidden numbers for the user to discover as zeros.
-	this.matrix = new Array(81);
+	props.matrix = new Array(81);
 
 	// initial puzzle is all zeros.
-	this.matrix.clear();
+	props.matrix.clear();
 
 	// stores the difficulty level of the puzzle 0 is easiest.
-  this.level = 0;
+  props.level = 0;
 
-  this.setLevel = function(level) {
+  props.setLevel = function(level) {
     if (!level) return;
 
-    this.level = level;
+    props.level = level;
   }
 
-	// this method initializes the sudoku puzzle beginning with a root
+	// props.method initializes the sudoku puzzle beginning with a root
 	// solution and randomly shuffling rows, columns and values. the result
-	// of this method will be a completely solved sudoku board. the shuffle
+	// of props.method will be a completely solved sudoku board. the shuffle
 	// is similar to that used by the sudoku puzzle at:
 	//
 	// http://www.dhtmlgoodies.com/scripts/game_sudoku/game_sudoku.html
 	//
-	// this method takes one parameter:
+	// props.method takes one parameter:
 	// 	matrix - the 9x9 array to store the puzzle data. the array
-	// 		 contents will be overwritten by this method.
-	this.shuffle = function(matrix) {
+	// 		 contents will be overwritten by props.method.
+	props.shuffle = function(matrix) {
     var k;
-		// create the root sudoku solution. this produces the following
+		// create the root sudoku solution. props.produces the following
 		// sudoku:
 		//
 		// 1 2 3 | 4 5 6 | 7 8 9
@@ -188,9 +190,9 @@ function Sudoku() {
 			var s2 = Math.floor(Math.random() * 3);
 
 			for(var row = 0; row < 9; row++) {
-				var tmp = this.matrix[row * 9 + (s1 * 3 + c % 3)];
-				this.matrix[row * 9 + (s1 * 3 + c % 3)] = this.matrix[row * 9 + (s2 * 3 + c % 3)];
-				this.matrix[row * 9 + (s2 * 3 + c % 3)] = tmp;
+				var tmp = props.matrix[row * 9 + (s1 * 3 + c % 3)];
+				props.matrix[row * 9 + (s1 * 3 + c % 3)] = props.matrix[row * 9 + (s2 * 3 + c % 3)];
+				props.matrix[row * 9 + (s2 * 3 + c % 3)] = tmp;
 			}
 		}
 
@@ -215,9 +217,9 @@ function Sudoku() {
 			var c2 = Math.floor(Math.random() * 3);
 
 			for(var row = 0; row < 9; row++) {
-				var tmp = this.matrix[row * 9 + (s % 3 * 3 + c1)];
-				this.matrix[row * 9 + (s % 3 * 3 + c1)] = this.matrix[row * 9 + (s % 3 * 3 + c2)];
-				this.matrix[row * 9 + (s % 3 * 3 + c2)] = tmp;
+				var tmp = props.matrix[row * 9 + (s % 3 * 3 + c1)];
+				props.matrix[row * 9 + (s % 3 * 3 + c1)] = props.matrix[row * 9 + (s % 3 * 3 + c2)];
+				props.matrix[row * 9 + (s % 3 * 3 + c2)] = tmp;
 			}
 		}
 
@@ -240,9 +242,9 @@ function Sudoku() {
 
 			for(var col = 0; col < 9; col++)
 			{
-				var tmp = this.matrix[(s % 3 * 3 + r1) * 9 + col];
-				this.matrix[(s % 3 * 3 + r1) * 9 + col] = this.matrix[(s % 3 * 3 + r2) * 9 + col];
-				this.matrix[(s % 3 * 3 + r2) * 9 + col] = tmp;
+				var tmp = props.matrix[(s % 3 * 3 + r1) * 9 + col];
+				props.matrix[(s % 3 * 3 + r1) * 9 + col] = props.matrix[(s % 3 * 3 + r2) * 9 + col];
+				props.matrix[(s % 3 * 3 + r2) * 9 + col] = tmp;
 			}
 		}
 
@@ -267,21 +269,21 @@ function Sudoku() {
 		// mirror left to right and/or top to bottom.
 	}
 
-	// this method randomly masks values in a solved sudoku board. for the
+	// props.method randomly masks values in a solved sudoku board. for the
 	// easiest level it will hide 5 cells from each 3x3 subsquare.
 	//
-	// this method makes no attempt to ensure a unique solution and simply
+	// props.method makes no attempt to ensure a unique solution and simply
 	// (naively) just masks random values. usually there will be only one
 	// solution however, there may be two or more. i've seen boards with as
-	// many as 6 or 7 solutions using this function, though that is pretty
+	// many as 6 or 7 solutions using props.function, though that is pretty
 	// rare.
 	//
-	// this method takes two parameters:
+	// props.method takes two parameters:
 	// 	matrix - the game array completely initialized with the game
 	// 		 data.
 	// 	mask - an array to store the 9x9 mask data. the mask array will
 	// 	       contain the board that will be presented to the user.
-	this.maskBoardEasy = function(matrix, mask) {
+	props.maskBoardEasy = function(matrix, mask) {
 		var i, j, k;
 		for(i = 0; i < 81; i++)
 			mask[i] = matrix[i];
@@ -303,21 +305,21 @@ function Sudoku() {
 		}
 	}
 
-	// this method scans all three zones that contains the specified cell
+	// props.method scans all three zones that contains the specified cell
 	// and populates an array with values that have not already been used in
 	// one of the zones. the order of the values in the array are randomized
 	// so the solver may simply iterate linearly through the array to try
 	// the values in a random order rather than sequentially.
 	//
-	// this method takes three parameters:
+	// props.method takes three parameters:
 	// 	matrix - the array containing the current state of the puzzle.
 	// 	cell - the cell for which to retrieve available values.
 	// 	avail - the array to receive the available values. if this
-	// 		parameter is null, this method simply counts the number
+	// 		parameter is null, props.method simply counts the number
 	// 		of available values without returning them.
 	//
-	// this method returns the length of the data in the available array.
-	this.getAvailable = function(matrix, cell, avail)
+	// props.method returns the length of the data in the available array.
+	props.getAvailable = function(matrix, cell, avail)
 	{
 		var i, j, row, col, r, c;
 		var arr = new Array(9);
@@ -382,16 +384,16 @@ function Sudoku() {
 		return j;
 	}
 
-	// this method is used by the solver to find the next cell to be filled.
+	// props.method is used by the solver to find the next cell to be filled.
 	// the cell is chosen by finding a cell with the least amount of
 	// available values to try.
 	//
-	// this method takes one parameter:
+	// props.method takes one parameter:
 	// 	matrix - the array containing the current state of the puzzle.
 	//
-	// this method returns the next cell, or -1 if there are no cells left
+	// props.method returns the next cell, or -1 if there are no cells left
 	// to choose.
-	this.getCell = function(matrix)
+	props.getCell = function(matrix)
 	{
 		var cell = -1, n = 10, i, j;
 		var avail = new Array(9);
@@ -401,7 +403,7 @@ function Sudoku() {
 		{
 			if(matrix[i] == 0)
 			{
-				j = this.getAvailable(matrix, i, null);
+				j = props.getAvailable(matrix, i, null);
 
 				if(j < n)
 				{
@@ -417,7 +419,7 @@ function Sudoku() {
 		return cell;
 	}
 
-	// this is the actual solver. it implements a backtracking algorithm in
+	// props.is the actual solver. it implements a backtracking algorithm in
 	// which it randomly selects numbers to try in each cell. it starts
 	// with the first cell and picks a random number. if the number works in
 	// the cell, it recursively chooses the next cell and starts again. if
@@ -427,19 +429,19 @@ function Sudoku() {
 	// numbers for that cell have also been tried, we back up again. this
 	// continues until a value is chosen for all 81 cells.
 	//
-	// this method takes one parameter:
+	// props.method takes one parameter:
 	// 	matrix - the array containing the current state of the puzzle.
 	//
-	// this method returns 1 if a solution has been found or 0 if there was
+	// props.method returns 1 if a solution has been found or 0 if there was
 	// not a solution.
-	this.solve = function(matrix)
+	props.solve = function(matrix)
 	{
 		var i, j, ret = 0;
-		var cell = this.getCell(matrix);
+		var cell = props.getCell(matrix);
 
-		// since this is the solver that is following the sudoku rules,
+		// since props.is the solver that is following the sudoku rules,
 		// if getCell returns -1 we are guaranteed to have found a valid
-		// solution. in this case we just return 1 (for 1 solution, see
+		// solution. in props.case we just return 1 (for 1 solution, see
 		// enumSolutions for more information).
 		if(cell == -1)
 			return 1;
@@ -447,13 +449,13 @@ function Sudoku() {
 		var avail = new Array(9);
 		avail.clear();
 
-		j = this.getAvailable(matrix, cell, avail);
+		j = props.getAvailable(matrix, cell, avail);
 		for(i = 0; i < j; i++)
 		{
 			matrix[cell] = avail[i];
 
 			// if we found a solution, return 1 to the caller.
-			if(this.solve(matrix) == 1)
+			if(props.solve(matrix) == 1)
 				return 1;
 
 			// if we haven't found a solution yet, try the next
@@ -467,44 +469,44 @@ function Sudoku() {
 		return 0;
 	}
 
-	// this method counts the number of possible solutions for a given
-	// puzzle. this uses the same algorithm as the solver but tries all
+	// props.method counts the number of possible solutions for a given
+	// puzzle. props.uses the same algorithm as the solver but tries all
 	// the available values for all the cells incrementing a count every
-	// time a new solution is found. this method is used by the mask
+	// time a new solution is found. props.method is used by the mask
 	// function to ensure there is only one solution to the puzzle.
 	//
-	// this method performs well for a puzzle with 20 or so hints. do not
-	// try this function on a blank puzzle (zero hints). there is not enough
+	// props.method performs well for a puzzle with 20 or so hints. do not
+	// try props.function on a blank puzzle (zero hints). there is not enough
 	// time remaining in the physical universe to enumerate all the possible
-	// sudoku boards. when this method returns, the puzzle passed in is
+	// sudoku boards. when props.method returns, the puzzle passed in is
 	// restored to its original state.
 	//
-	// this method takes one parameter:
+	// props.method takes one parameter:
 	// 	matrix - the array containing the current state of the puzzle.
 	//
-	// this method returns the number of solutions found or 0 if there was
+	// props.method returns the number of solutions found or 0 if there was
 	// not a solution.
-	this.enumSolutions = function(matrix)
+	props.enumSolutions = function(matrix)
 	{
 		var i, j, ret = 0;
-		var cell = this.getCell(matrix);
+		var cell = props.getCell(matrix);
 
 		// if getCell returns -1 the board is completely filled which
-		// means we found a solution. return 1 for this solution.
+		// means we found a solution. return 1 for props.solution.
 		if(cell == -1)
 			return 1;
 
 		var avail = new Array(9);
 		avail.clear();
 
-		j = this.getAvailable(matrix, cell, avail);
+		j = props.getAvailable(matrix, cell, avail);
 		for(i = 0; i < j; i++)
 		{
 			// we try each available value in the array and count
 			// how many solutions are produced.
 			matrix[cell] = avail[i];
 
-			ret += this.enumSolutions(matrix);
+			ret += props.enumSolutions(matrix);
 
 			// for the purposes of the mask function, if we found
 			// more than one solution, we can quit searching now
@@ -517,18 +519,18 @@ function Sudoku() {
 		return ret;
 	}
 
-	// this method generates a minimal sudoku puzzle. minimal means that no
+	// props.method generates a minimal sudoku puzzle. minimal means that no
 	// remaining hints on the board may be removed and still generate a
-	// unique solution. when this method returns the resulting puzzle will
+	// unique solution. when props.method returns the resulting puzzle will
 	// contain about 20 to 25 hints that describe a puzzle with only one
 	// solution.
 	//
-	// this method takes two parameters:
+	// props.method takes two parameters:
 	// 	matrix - the game array completely initialized with the game
 	// 		 data.
 	// 	mask - an array to store the 9x9 mask data. the mask array will
 	// 	       contain the board that will be presented to the user.
-	this.maskBoard = function(matrix, mask)
+	props.maskBoard = function(matrix, mask)
 	{
 		var i, j, k, r, c, n = 0, a, hints = 0, cell, val;
 		var avail = new Array(9);
@@ -551,7 +553,7 @@ function Sudoku() {
 		// cell value and at least one other value), check rule two.
 		// 2. for each zone, if the selected value could go in another
 		// free cell in the zone then the cell may be selected as a
-		// hint. this rule must be satisfied by all three zones.
+		// hint. props.rule must be satisfied by all three zones.
 		//
 		// both rules must pass for a cell to be selected. once all 81
 		// cells have been checked, the masked board will represent a
@@ -567,7 +569,7 @@ function Sudoku() {
 			val = matrix[cell];
 
 			// see how many values can go in the cell.
-			i = this.getAvailable(mask, cell, null);
+			i = props.getAvailable(mask, cell, null);
 
 			if(i > 1)
 			{
@@ -601,7 +603,7 @@ function Sudoku() {
 
 					// get the values that can be used in
 					// the cell.
-					a = this.getAvailable(mask, j, avail);
+					a = props.getAvailable(mask, j, avail);
 
 					// see if our value is in the available
 					// value list.
@@ -632,7 +634,7 @@ function Sudoku() {
 						j = i * 9 + col;
 						if(mask[j] > 0)
 							continue;
-						a = this.getAvailable(mask, j, avail);
+						a = props.getAvailable(mask, j, avail);
 						for(j = 0; j < a; j++)
 						{
 							if(avail[j] == val)
@@ -665,7 +667,7 @@ function Sudoku() {
 								k = i * 9 + j;
 								if(mask[k] > 0)
 									continue;
-								a = this.getAvailable(mask, k, avail);
+								a = props.getAvailable(mask, k, avail);
 								for(k = 0; k < a; k++)
 								{
 									if(avail[k] == val)
@@ -692,7 +694,7 @@ function Sudoku() {
 		}
 		while(n < 81);
 
-		// at this point we should have a masked board with about 40 to
+		// at props.point we should have a masked board with about 40 to
 		// 50 hints. randomly select hints and remove them. for each
 		// removed hint, see if there is still a single solution. if so,
 		// select another hint and repeat. if not, replace the hint and
@@ -707,11 +709,10 @@ function Sudoku() {
 
 			val = mask[cell];
 
-			var t = this;
 			var solutions = 0;
 
 			mask[cell] = 0;
-			solutions = this.enumSolutions(mask);
+			solutions = props.enumSolutions(mask);
 
 			if(solutions > 1)
 				mask[cell] = val;
@@ -721,22 +722,22 @@ function Sudoku() {
 		}
 		while(hints > 0);
 
-		// at this point we have a board with about 20 to 25 hints and a
+		// at props.point we have a board with about 20 to 25 hints and a
 		// single solution.
 	}
 
 
-	// this method checks whether a value will work in a given cell. it
+	// props.method checks whether a value will work in a given cell. it
 	// checks each zone to ensure the value is not already used.
 	//
-	// this method takes three parameters:
+	// props.method takes three parameters:
 	// 	row - the row of the cell
 	// 	col - the column of the cell
 	// 	val - the value to try in the cell
 	//
-	// this method returns true if the value can be used in the cell, false
+	// props.method returns true if the value can be used in the cell, false
 	// otherwise.
-	this._checkVal = function(matrix, row, col, val) {
+	props._checkVal = function(matrix, row, col, val) {
 		var i, j, r, c;
 		// check each cell in the row to see if the value already
 		// exists in the row. do not look at the value of the cell in
@@ -767,74 +768,74 @@ function Sudoku() {
 
 	// 'public' methods
 
-	// this method checks whether a value will work in a given cell. it
+	// props.method checks whether a value will work in a given cell. it
 	// checks each zone to ensure the value is not already used.
 	//
-	// this method takes three parameters:
+	// props.method takes three parameters:
 	// 	row - the row of the cell
 	// 	col - the column of the cell
 	// 	val - the value to try in the cell
 	//
-	// this method returns true if the value can be used in the cell, false
+	// props.method returns true if the value can be used in the cell, false
 	// otherwise.
-	this.checkVal = function(row, col, val)
+	props.checkVal = function(row, col, val)
 	{
-		return this._checkVal(this.matrix, row, col, val);
+		return props._checkVal(props.matrix, row, col, val);
 	}
 
-	// this method sets the value for a particular cell. this is called by
+	// props.method sets the value for a particular cell. props.is called by
 	// the user interface when the user enters a value.
 	//
-	// this method takes three parameters:
+	// props.method takes three parameters:
 	// 	row - the row of the cell
 	// 	col - the column of the cell
 	// 	val - the value to enter in the cell
-	this.setVal = function(row, col, val)
+	props.setVal = function(row, col, val)
 	{
-		this.matrix[row * 9 + col] = val;
+		props.matrix[row * 9 + col] = val;
 	}
 
-	// this method gets the value for a particular cell. this is called by
+	// props.method gets the value for a particular cell. props.is called by
 	// the user interface for displaying the contents of a cell.
 	//
-	// this method takes two parameters:
+	// props.method takes two parameters:
 	// 	row - the row of the cell
 	// 	col - the column of the cell
 	//
-	// this method returns the value of the cell at the specified location.
-	this.getVal = function(row, col)
+	// props.method returns the value of the cell at the specified location.
+	props.getVal = function(row, col)
 	{
-		return this.matrix[row * 9 + col];
+		return props.matrix[row * 9 + col];
 	}
 
-	// this method initializes a new game using the solver to generate the
+	// props.method initializes a new game using the solver to generate the
 	// board.
-	this._newGame = function() {
+	props._newGame = function() {
 		var i, hints = 0;
 		var mask = new Array(81);
 
 		// clear out the game matrix.
-		this.matrix.clear();
+		props.matrix.clear();
 
-		// call the solver on a completely empty matrix. this will
+		// call the solver on a completely empty matrix. props.will
 		// generate random values for cells resulting in a solved board.
-		this.solve(this.matrix);
+		props.solve(props.matrix);
 
 		// generate hints for the solved board. if the level is easy,
 		// use the easy mask function.
-		if(this.level == 0)
+		if(props.level == 0)
 		{
-			this.maskBoardEasy(this.matrix, mask);
+			props.maskBoardEasy(props.matrix, mask);
 		}
 		else
 		{
 			// the level is medium or greater. use the advanced mask
 			// function to generate a minimal sudoku puzzle with a
 			// single solution.
-			this.maskBoard(this.matrix, mask);
+			props.maskBoard(props.matrix, mask);
 
 			// if the level is medium, randomly add 4 extra hints.
-			if(this.level == 1)
+			if(props.level == 1)
 			{
 				for(i = 0; i < 4; i++)
 				{
@@ -844,24 +845,24 @@ function Sudoku() {
 					}
 					while(mask[cell] != 0);
 
-					mask[cell] = this.matrix[cell];
+					mask[cell] = props.matrix[cell];
 				}
 			}
 		}
 
 		// save the solved matrix.
-		this.save = this.matrix;
+		props.save = props.matrix;
 
 		// set the masked matrix as the puzzle.
-		this.matrix = mask;
+		props.matrix = mask;
 
 	}
 
-	this.done = true;
+	props.done = true;
 
-  this._doHints = function(matrix, mask, tried, hints)
+  props._doHints = function(matrix, mask, tried, hints)
 	{
-		// at this point we should have a masked board with about 40 to
+		// at props.point we should have a masked board with about 40 to
 		// 50 hints. randomly select hints and remove them. for each
 		// removed hint, see if there is still a single solution. if so,
     // select another hint and repeat. if not, replace the hint and
@@ -879,35 +880,36 @@ function Sudoku() {
 
 			val = mask[cell];
 
-			var t = this;
 			var solutions = 0;
 
 			mask[cell] = 0;
-			solutions = this.enumSolutions(mask);
+			solutions = props.enumSolutions(mask);
 			//console.log("timeout");
 
 			if(solutions > 1)
 				mask[cell] = val;
 
 			tried[cell] = 0;
-			hints--;
-			var t = this;
+      hints--;
+
+      var t = props;
+
 			setTimeout(function(){t._doHints(matrix, mask, tried, hints);}, 50);
 		}
 		else
 		{
-			this.save = this.matrix;
-			this.matrix = mask;
-//			this.done();
+			props.save = props.matrix;
+			props.matrix = mask;
+//			props.done();
 		}
 
 		//console.log(hints);
 
-		// at this point we have a board with about 20 to 25 hints and a
+		// at props.point we have a board with about 20 to 25 hints and a
 		// single solution.
 	}
 
-	this._doMask = function(matrix, mask)
+	props._doMask = function(matrix, mask)
 	{
 		var i, j, k, r, c, n = 0, a, hints = 0, cell, val;
 		var avail = new Array(9);
@@ -930,7 +932,7 @@ function Sudoku() {
 		// cell value and at least one other value), check rule two.
 		// 2. for each zone, if the selected value could go in another
 		// free cell in the zone then the cell may be selected as a
-		// hint. this rule must be satisfied by all three zones.
+		// hint. props.rule must be satisfied by all three zones.
 		//
 		// both rules must pass for a cell to be selected. once all 81
 		// cells have been checked, the masked board will represent a
@@ -946,7 +948,7 @@ function Sudoku() {
 			val = matrix[cell];
 
 			// see how many values can go in the cell.
-			i = this.getAvailable(mask, cell, null);
+			i = props.getAvailable(mask, cell, null);
 
 			if(i > 1)
 			{
@@ -980,7 +982,7 @@ function Sudoku() {
 
 					// get the values that can be used in
 					// the cell.
-					a = this.getAvailable(mask, j, avail);
+					a = props.getAvailable(mask, j, avail);
 
 					// see if our value is in the available
 					// value list.
@@ -1011,7 +1013,7 @@ function Sudoku() {
 						j = i * 9 + col;
 						if(mask[j] > 0)
 							continue;
-						a = this.getAvailable(mask, j, avail);
+						a = props.getAvailable(mask, j, avail);
 						for(j = 0; j < a; j++)
 						{
 							if(avail[j] == val)
@@ -1044,7 +1046,7 @@ function Sudoku() {
 								k = i * 9 + j;
 								if(mask[k] > 0)
 									continue;
-								a = this.getAvailable(mask, k, avail);
+								a = props.getAvailable(mask, k, avail);
 								for(k = 0; k < a; k++)
 								{
 									if(avail[k] == val)
@@ -1071,32 +1073,32 @@ function Sudoku() {
 		}
 		while(n < 81);
 
-		var t = this;
+		var t = props.
 		setTimeout(function(){t._doHints(matrix, mask, tried, hints);}, 50);
 	}
 
-	this.newGame = function() {
+	props.newGame = function() {
 		var i, hints = 0;
 		var mask = new Array(81);
 
 		// clear out the game matrix.
-		this.matrix.clear();
+		props.matrix.clear();
 
-		// call the solver on a completely empty matrix. this will
+		// call the solver on a completely empty matrix. props.will
 		// generate random values for cells resulting in a solved board.
-		this.solve(this.matrix);
+		props.solve(props.matrix);
 
 		// generate hints for the solved board. if the level is easy,
 		// use the easy mask function.
-		if(this.level == 0)
+		if(props.level == 0)
 		{
-			this.maskBoardEasy(this.matrix, mask);
+			props.maskBoardEasy(props.matrix, mask);
 
 			// save the solved matrix.
-			this.save = this.matrix;
+			props.save = props.matrix;
 
 			// set the masked matrix as the puzzle.
-			this.matrix = mask;
+			props.matrix = mask;
 
 
 		}
@@ -1105,10 +1107,10 @@ function Sudoku() {
 			// the level is medium or greater. use the advanced mask
 			// function to generate a minimal sudoku puzzle with a
 			// single solution.
-			this._doMask(this.matrix, mask);
+			props._doMask(props.matrix, mask);
 
 			// if the level is medium, randomly add 4 extra hints.
-			if(this.level == 1)
+			if(props.level == 1)
 			{
 				for(i = 0; i < 4; i++)
 				{
@@ -1118,40 +1120,42 @@ function Sudoku() {
 					}
 					while(mask[cell] != 0);
 
-					mask[cell] = this.matrix[cell];
+					mask[cell] = props.matrix[cell];
 				}
 			}
 		}
 	}
 
-	// this method solves the current game by restoring the solved matrix.
-	// if the original unmodified masked matrix was saved, this function
+	// props.method solves the current game by restoring the solved matrix.
+	// if the original unmodified masked matrix was saved, props.function
 	// could call the solve method which would undo any wrong player guesses
 	// and actually solve the game.
-	this.solveGame = function() {
-		this.matrix = this.save;
+	props.solveGame = function() {
+		props.matrix = props.save;
 	}
 
-	// this method determines wether or not the game has been completed. it
+	// props.method determines wether or not the game has been completed. it
 	// looks at each cell and determines whether or not a value has been
 	// entered. if not, the game is not done. if a value has been entered,
 	// it calls checkVal() to make sure the value does not violate the
 	// sudoku rules. if both checks are passed for each cell in the board
 	// the game is complete.
-	this.gameFinished = function()
+	props.gameFinished = function()
 	{
 		for(var i = 0; i < 9; i++)
 		{
 			for(var j = 0; j < 9; j++)
 			{
-				var val = this.matrix[i * 9 + j];
-				if((val == 0) || (this._checkVal(this.matrix, i, j, val) == false))
+				var val = props.matrix[i * 9 + j];
+				if((val == 0) || (props._checkVal(props.matrix, i, j, val) == false))
 					return 0;
 			}
 		}
 
 		return true;
-	}
+  }
+
+  return props;
 }
 
 export default Sudoku;
