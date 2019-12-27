@@ -1,6 +1,6 @@
 import querystring from 'querystring';
 import aws from 'aws-sdk';
-import { uuidv4 } from 'uuid';
+import uuidv4 from 'uuid';
 import Sudoku from './sudoku.class';
 
 export const handler = async (event, context) => {
@@ -43,7 +43,7 @@ export const handler = async (event, context) => {
     }
   };
 
-  ddbParams.putItem(params, (err, data) => {
+  ddb.putItem(params, (err, data) => {
     let statusCode = 200;
 
     if (err) {
