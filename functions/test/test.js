@@ -22,6 +22,8 @@ export const handler = async (event, context) => {
   const params = querystring.parse(event.body);
   const difficulty = params.difficulty || 0;
 
+  console.log(difficulty)
+
   const game = Sudoku();
 
   game.setLevel(difficulty);
@@ -42,6 +44,8 @@ export const handler = async (event, context) => {
       'game-hints-count': 0,
     }
   };
+
+  console.log(ddbParams);
 
   ddb.putItem(ddbParams, (err, data) => {
     let statusCode = 200;
