@@ -39,9 +39,9 @@ export const handler = async (event, context) => {
   const ddbParams = {
     TableName: 'sudoku-games',
     Item: {
-      'game-id': gameKey,
-      'game-board': safeMatrix,
-      'game-hints-count': 0,
+      'game-id': { S: gameKey },
+      'game-board': { S: safeMatrix },
+      'game-hints-count': { N: 0 },
     }
   };
 
