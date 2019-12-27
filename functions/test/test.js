@@ -5,7 +5,13 @@ import Sudoku from './sudoku.class';
 
 export const handler = (event, context, callback) => {
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    return callback(
+      null,
+      {
+        statusCode: 405,
+        body: "Method Not Allowed",
+      },
+    );
   }
 
   const awsConfig = new aws.Config({
@@ -22,17 +28,16 @@ export const handler = (event, context, callback) => {
   const params = querystring.parse(event.body);
   const difficulty = params.difficulty || 0;
 
-  console.log(difficulty)
-
   const game = Sudoku();
 
   game.setLevel(difficulty);
+
+  game.newGame();
 
   let safeMatrix;
   try {
     safeMatrix = JSON.stringify(game.matrix);
   } catch (stringifyError) {
-    console.log(stringifyError);
     return callback(stringifyError, null);
   }
 
@@ -46,21 +51,13 @@ export const handler = (event, context, callback) => {
     }
   };
 
-  console.log(ddbParams);
-
   ddb.putItem(ddbParams, (err, data) => {
-    let statusCode = 200;
-
-    if (err) {
-      return callback(err, null);
-      console.log(err);
-      statusCode = 400;
-    }
+    if (err) return callback(err, null);
 
     callback(
       null,
       {
-        statusCode,
+        statusCode: 200,
         body: gameKey,
       }
     );
