@@ -1073,7 +1073,7 @@ const Sudoku = () => {
 		}
 		while(n < 81);
 
-		var t = props.
+		var t = props;
 		setTimeout(function(){t._doHints(matrix, mask, tried, hints);}, 50);
 	}
 
