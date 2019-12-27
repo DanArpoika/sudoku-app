@@ -43,7 +43,7 @@ export const handler = async (event, context) => {
     }
   };
 
-  ddb.putItem(params, (err, data) => {
+  ddb.putItem(ddbParams, (err, data) => {
     let statusCode = 200;
 
     if (err) {
