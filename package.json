@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "preexport": "babel functions -d functions/dist",
+    "preexport": "rm -rf functions/dist && babel functions -d functions/dist",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
