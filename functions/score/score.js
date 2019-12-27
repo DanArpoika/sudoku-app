@@ -26,28 +26,32 @@ export const handler = (event, context, callback) => {
   const ddb = new aws.DynamoDB(awsConfig);
 
   const params = querystring.parse(event.body);
+
   const difficulty = params.difficulty || 0;
+  const name = params.name;
+  const seconds = params.seconds;
 
-  const game = Sudoku();
+  // const game = Sudoku();
 
-  game.setLevel(difficulty);
+  // game.setLevel(difficulty);
 
-  game.newGame();
+  // game.newGame();
 
-  let safeMatrix;
-  try {
-    safeMatrix = JSON.stringify(game.matrix);
-  } catch (stringifyError) {
-    return callback(stringifyError, null);
-  }
+  // let safeMatrix;
+  // try {
+  //   safeMatrix = JSON.stringify(game.matrix);
+  // } catch (stringifyError) {
+  //   return callback(stringifyError, null);
+  // }
 
   const gameKey = uuidv4();
   const ddbParams = {
     TableName: 'sudoku-games',
     Item: {
       'game-id': { S: gameKey },
-      'game-board': { S: safeMatrix },
-      'game-hints-count': { S: "0" },
+      'game-score': { S: `${seconds}` },
+      'game-name': { S: name },
+      'game-difficulty': { S: `${difficulty}` },
     }
   };
 

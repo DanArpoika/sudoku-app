@@ -2,6 +2,7 @@ const theme = {
   background: '#131B3B',
   mainAccent: '#05F29B',
   secondaryAccent: '#04BF7B',
+  warning: '#F23005',
   white: '#fff',
   black: '#16191a',
   darkBlack: '#0f1111',

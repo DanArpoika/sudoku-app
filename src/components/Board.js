@@ -56,14 +56,15 @@ const Cell = styled.input`
 
 const Board = ({
   isActive,
+  isPaused,
   show,
   isLoading,
   game = {},
+  onWin = () => {},
 }) => {
 
   const boardRef = useRef();
   const [rows, setRows] = useState([]);
-
   const [focused, setFocus] = useState([0, 0]);
 
   const generateArray = (matrix) => {
@@ -82,6 +83,7 @@ const Board = ({
         rows[i].push({
           pos: [i, j],
           value: matrix[count],
+          isDisabled: matrix[count] !== 0,
           isValid: true,
         });
 
@@ -134,16 +136,38 @@ const Board = ({
   };
 
   useEffect (() => {
+    if (!game) return;
+
     if (rows.length < 1) {
       generateArray(game.matrix);
     }
 
     window.addEventListener('keydown', handleArrows);
-    return (() => {
 
+    return (() => {
       window.removeEventListener('keydown', handleArrows);
     });
   })
+
+  useEffect (() => {
+    if (!game) return;
+
+    generateArray(game.matrix);
+  }, [game])
+
+  const checkWin = (rows) => {
+    // const matrix = [];
+
+    // for (let i = 0; i < rows.length; i++) {
+    //   for (let j = 0; j < rows[i].length; j++) {
+    //     matrix.push(rows[i][j].value);
+    //   }
+    // }
+
+    if (game.gameFinished()) {
+      onWin();
+    }
+  }
 
   /**
    * Handle the input change for a sudoku cell.
@@ -168,9 +192,23 @@ const Board = ({
     copyRows[x][y].value = value;
     copyRows[x][y].isIncorrect = !game.checkVal(x, y, value);
 
+    if (value === '') copyRows[x][y].isIncorrect = false;
+
+    if (game.level === 0) {
+      const matrixValue = game.save[(y) + (x * 9)];
+
+      if (value != matrixValue) {
+        copyRows[x][y].isIncorrect = true;
+      }
+    }
+
     if (game.level > 0) copyRows[x][y].isIncorrect = false;
 
+    game.setVal(x, y, parseInt(value, 10));
+    console.log(game)
     setRows(copyRows);
+
+    checkWin(copyRows);
   }
 
   if (!show || !game || game.matrix.length < 1) return null;
@@ -184,10 +222,11 @@ const Board = ({
               onFocus={() => setFocus([cellIndex, rowIndex])}
               onChange={(e) => handleInput(rowIndex, cellIndex, e)}
               hasValue={cell.value !== 0}
-              value={cell.value === 0 ? '' : cell.value}
+              value={cell.value === 0 || isPaused ? '' : cell.value}
               isValid={cell.isValid}
-              disabled={isActive}
+              disabled={isPaused || (isActive || cell.isDisabled)}
               isIncorrect={cell.isIncorrect}
+              isPaused={isPaused}
             />
           ))
         ))}

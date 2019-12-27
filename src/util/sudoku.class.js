@@ -107,9 +107,7 @@ const Sudoku = () => {
 	// stores the difficulty level of the puzzle 0 is easiest.
   props.level = 0;
 
-  props.setLevel = function(level) {
-    if (!level) return;
-
+  props.setLevel = (level) => {
     props.level = level;
   }
 
@@ -211,17 +209,23 @@ const Sudoku = () => {
 		//----------------------
 		// . . . | . . . | . . .
 		// . . . | . . . | . . .
-		// . . . | . . . | . . .
-		for (var s = 0; s < 42; s++) {
-			var c1 = Math.floor(Math.random() * 3);
-			var c2 = Math.floor(Math.random() * 3);
+    // . . . | . . . | . . .
+    // let rando = Math.ceil(Math.random() * 5);
+    // let times = 0;
+    // while (times < rando) {
+      for (var s = 0; s < 42; s++) {
+        var c1 = Math.floor(Math.random() * 3);
+        var c2 = Math.floor(Math.random() * 3);
 
-			for(var row = 0; row < 9; row++) {
-				var tmp = props.matrix[row * 9 + (s % 3 * 3 + c1)];
-				props.matrix[row * 9 + (s % 3 * 3 + c1)] = props.matrix[row * 9 + (s % 3 * 3 + c2)];
-				props.matrix[row * 9 + (s % 3 * 3 + c2)] = tmp;
-			}
-		}
+        for(var row = 0; row < 9; row++) {
+          var tmp = props.matrix[row * 9 + (s % 3 * 3 + c1)];
+          props.matrix[row * 9 + (s % 3 * 3 + c1)] = props.matrix[row * 9 + (s % 3 * 3 + c2)];
+          props.matrix[row * 9 + (s % 3 * 3 + c2)] = tmp;
+        }
+      }
+
+    //   times++;
+    // }
 
 		// randomly swap rows within each row of subsquares
 		//
@@ -469,16 +473,16 @@ const Sudoku = () => {
 		return 0;
 	}
 
-	// props.method counts the number of possible solutions for a given
-	// puzzle. props.uses the same algorithm as the solver but tries all
+	// Thismethod counts the number of possible solutions for a given
+	// puzzle. This uses the same algorithm as the solver but tries all
 	// the available values for all the cells incrementing a count every
-	// time a new solution is found. props.method is used by the mask
+	// time a new solution is found. This method is used by the mask
 	// function to ensure there is only one solution to the puzzle.
 	//
-	// props.method performs well for a puzzle with 20 or so hints. do not
-	// try props.function on a blank puzzle (zero hints). there is not enough
+	// This performs well for a puzzle with 20 or so hints. do not
+	// try  this function on a blank puzzle (zero hints). there is not enough
 	// time remaining in the physical universe to enumerate all the possible
-	// sudoku boards. when props.method returns, the puzzle passed in is
+	// sudoku boards. when this method returns, the puzzle passed in is
 	// restored to its original state.
 	//
 	// props.method takes one parameter:
@@ -1090,7 +1094,7 @@ const Sudoku = () => {
 
 		// generate hints for the solved board. if the level is easy,
 		// use the easy mask function.
-		if(props.level == 0)
+		if(props.level === 0)
 		{
 			props.maskBoardEasy(props.matrix, mask);
 
