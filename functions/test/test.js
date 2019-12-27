@@ -3,7 +3,7 @@ import aws from 'aws-sdk';
 import uuidv4 from 'uuid';
 import Sudoku from './sudoku.class';
 
-export const handler = async (event, context) => {
+export const handler = (event, context, callback) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
@@ -33,6 +33,7 @@ export const handler = async (event, context) => {
     safeMatrix = JSON.stringify(game.matrix);
   } catch (stringifyError) {
     console.log(stringifyError);
+    return callback(stringifyError, null);
   }
 
   const gameKey = uuidv4();
@@ -51,14 +52,18 @@ export const handler = async (event, context) => {
     let statusCode = 200;
 
     if (err) {
+      return callback(err, null);
       console.log(err);
       statusCode = 400;
     }
 
-    return {
-      statusCode,
-      response: data,
-      ...(gameKey ? { gameKey } : {}),
-    };
+    callback(
+      null,
+      {
+        statusCode,
+        response: data,
+        ...(gameKey ? { gameKey } : {}),
+      }
+    );
   });
 }
