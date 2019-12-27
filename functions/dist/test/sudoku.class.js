@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Sudoku = void 0;
+
 /*
 * Sudoku Generator
 * v0.2
@@ -96,17 +101,17 @@ Array.prototype.clear = function () {
 // Instantiation of this class will automatically generate a new puzzle.
 
 
-function Sudoku() {
+const Sudoku = () => {
   // 'private' methods...
   // stores the 9x9 game data. the puzzle data is stored with revealed
   // numbers as 1-9 and hidden numbers for the user to discover as zeros.
-  this.matrix = new Array(81); // initial puzzle is all zeros.
+  (void 0).matrix = new Array(81); // initial puzzle is all zeros.
 
-  this.matrix.clear(); // stores the difficulty level of the puzzle 0 is easiest.
+  (void 0).matrix.clear(); // stores the difficulty level of the puzzle 0 is easiest.
 
-  this.level = 0;
+  (void 0).level = 0;
 
-  this.setLevel = function (level) {
+  (void 0).setLevel = function (level) {
     if (!level) return;
     this.level = level;
   }; // this method initializes the sudoku puzzle beginning with a root
@@ -121,7 +126,7 @@ function Sudoku() {
   // 		 contents will be overwritten by this method.
 
 
-  this.shuffle = function (matrix) {
+  (void 0).shuffle = function (matrix) {
     var k; // create the root sudoku solution. this produces the following
     // sudoku:
     //
@@ -274,7 +279,7 @@ function Sudoku() {
   // 	       contain the board that will be presented to the user.
 
 
-  this.maskBoardEasy = function (matrix, mask) {
+  (void 0).maskBoardEasy = function (matrix, mask) {
     var i, j, k;
 
     for (i = 0; i < 81; i++) mask[i] = matrix[i];
@@ -310,7 +315,7 @@ function Sudoku() {
   // this method returns the length of the data in the available array.
 
 
-  this.getAvailable = function (matrix, cell, avail) {
+  (void 0).getAvailable = function (matrix, cell, avail) {
     var i, j, row, col, r, c;
     var arr = new Array(9);
     arr.clear();
@@ -369,7 +374,7 @@ function Sudoku() {
   // to choose.
 
 
-  this.getCell = function (matrix) {
+  (void 0).getCell = function (matrix) {
     var cell = -1,
         n = 10,
         i,
@@ -408,7 +413,7 @@ function Sudoku() {
   // not a solution.
 
 
-  this.solve = function (matrix) {
+  (void 0).solve = function (matrix) {
     var i,
         j,
         ret = 0;
@@ -453,7 +458,7 @@ function Sudoku() {
   // not a solution.
 
 
-  this.enumSolutions = function (matrix) {
+  (void 0).enumSolutions = function (matrix) {
     var i,
         j,
         ret = 0;
@@ -491,7 +496,7 @@ function Sudoku() {
   // 	       contain the board that will be presented to the user.
 
 
-  this.maskBoard = function (matrix, mask) {
+  (void 0).maskBoard = function (matrix, mask) {
     var i,
         j,
         k,
@@ -672,7 +677,7 @@ function Sudoku() {
   // otherwise.
 
 
-  this._checkVal = function (matrix, row, col, val) {
+  (void 0)._checkVal = function (matrix, row, col, val) {
     var i, j, r, c; // check each cell in the row to see if the value already
     // exists in the row. do not look at the value of the cell in
     // the column we are trying. repeat for each zone.
@@ -706,7 +711,7 @@ function Sudoku() {
   // otherwise.
 
 
-  this.checkVal = function (row, col, val) {
+  (void 0).checkVal = function (row, col, val) {
     return this._checkVal(this.matrix, row, col, val);
   }; // this method sets the value for a particular cell. this is called by
   // the user interface when the user enters a value.
@@ -717,7 +722,7 @@ function Sudoku() {
   // 	val - the value to enter in the cell
 
 
-  this.setVal = function (row, col, val) {
+  (void 0).setVal = function (row, col, val) {
     this.matrix[row * 9 + col] = val;
   }; // this method gets the value for a particular cell. this is called by
   // the user interface for displaying the contents of a cell.
@@ -729,13 +734,13 @@ function Sudoku() {
   // this method returns the value of the cell at the specified location.
 
 
-  this.getVal = function (row, col) {
+  (void 0).getVal = function (row, col) {
     return this.matrix[row * 9 + col];
   }; // this method initializes a new game using the solver to generate the
   // board.
 
 
-  this._newGame = function () {
+  (void 0)._newGame = function () {
     var i,
         hints = 0;
     var mask = new Array(81); // clear out the game matrix.
@@ -771,9 +776,9 @@ function Sudoku() {
     this.matrix = mask;
   };
 
-  this.done = true;
+  (void 0).done = true;
 
-  this._doHints = function (matrix, mask, tried, hints) {
+  (void 0)._doHints = function (matrix, mask, tried, hints) {
     // at this point we should have a masked board with about 40 to
     // 50 hints. randomly select hints and remove them. for each
     // removed hint, see if there is still a single solution. if so,
@@ -809,7 +814,7 @@ function Sudoku() {
 
   };
 
-  this._doMask = function (matrix, mask) {
+  (void 0)._doMask = function (matrix, mask) {
     var i,
         j,
         k,
@@ -963,7 +968,7 @@ function Sudoku() {
     }, 50);
   };
 
-  this.newGame = function () {
+  (void 0).newGame = function () {
     var i,
         hints = 0;
     var mask = new Array(81); // clear out the game matrix.
@@ -1003,7 +1008,7 @@ function Sudoku() {
   // and actually solve the game.
 
 
-  this.solveGame = function () {
+  (void 0).solveGame = function () {
     this.matrix = this.save;
   }; // this method determines wether or not the game has been completed. it
   // looks at each cell and determines whether or not a value has been
@@ -1013,7 +1018,7 @@ function Sudoku() {
   // the game is complete.
 
 
-  this.gameFinished = function () {
+  (void 0).gameFinished = function () {
     for (var i = 0; i < 9; i++) {
       for (var j = 0; j < 9; j++) {
         var val = this.matrix[i * 9 + j];
@@ -1023,6 +1028,6 @@ function Sudoku() {
 
     return true;
   };
-}
+};
 
 exports.Sudoku = Sudoku;

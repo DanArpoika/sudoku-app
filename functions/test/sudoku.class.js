@@ -92,7 +92,7 @@ Array.prototype.clear = function() {
 
 // The Sudoku class stores the matrix array and implements the game logic.
 // Instantiation of this class will automatically generate a new puzzle.
-export const Sudoku = () => {
+const Sudoku = () => {
 	// 'private' methods...
 
 	// stores the 9x9 game data. the puzzle data is stored with revealed
@@ -1153,3 +1153,5 @@ export const Sudoku = () => {
 		return true;
 	}
 }
+
+export default Sudoku;
