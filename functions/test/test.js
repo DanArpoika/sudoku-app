@@ -61,8 +61,7 @@ export const handler = (event, context, callback) => {
       null,
       {
         statusCode,
-        response: data,
-        ...(gameKey ? { gameKey } : {}),
+        body: gameKey,
       }
     );
   });
